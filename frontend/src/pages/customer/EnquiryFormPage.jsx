@@ -2,17 +2,17 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { enquiryFormSchema } from '../../validations/enquiry.js';
-import { CONTACT_METHODS, BUSINESS_TYPES } from '../../constants/index.js';
+import { BUSINESS_TYPES } from '../../constants/index.js';
 import { submitEnquiry } from '../../services/enquiryService.js';
 import { useState } from 'react';
 import { Building2, ClipboardList, Mail, MapPin, MessageSquare, Phone, QrCode, Send } from 'lucide-react';
-
+ 
 export default function EnquiryFormPage() {
   const [searchParams] = useSearchParams();
   const source = (searchParams.get('source') || 'website').toUpperCase();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
-
+ 
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ export default function EnquiryFormPage() {
       preferred_contact_method: 'WHATSAPP',
     },
   });
-
+ 
   const onSubmit = async (values) => {
     setServerError('');
     try {
@@ -43,12 +43,12 @@ export default function EnquiryFormPage() {
       setServerError(details ? `${msg}: ${details}` : msg);
     }
   };
-
+ 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-950 via-blue-800 to-sky-500 px-4 py-10">
       <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-sky-300/20 blur-3xl" />
       <div className="pointer-events-none absolute -right-16 bottom-10 h-80 w-80 rounded-full bg-blue-200/20 blur-3xl" />
-
+ 
       <div className="relative mx-auto max-w-3xl">
         <div className="mb-8 text-center text-white">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">
@@ -59,7 +59,7 @@ export default function EnquiryFormPage() {
             Tell us about your requirement. Our team will get back to you shortly.
           </p>
         </div>
-
+ 
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="overflow-hidden rounded-3xl bg-white shadow-card"
@@ -69,14 +69,14 @@ export default function EnquiryFormPage() {
             <p className="text-sm font-medium">Enquiry details</p>
             <p className="text-xs text-blue-100">Fields marked * are required</p>
           </div>
-
+ 
           <div className="space-y-4 p-6 md:p-8">
             {source === 'QR' ? (
               <p className="inline-flex items-center gap-2 rounded-xl bg-brand-50 px-3 py-2 text-xs font-medium text-brand-700">
                 <QrCode size={14} /> Opened from QR code
               </p>
             ) : null}
-
+ 
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="Full name *" error={errors.customer_name?.message}>
                 <input className="w-full" {...register('customer_name')} autoComplete="name" placeholder="Your full name" />
@@ -119,12 +119,7 @@ export default function EnquiryFormPage() {
                 <div className="has-leading-icon">
                   <MessageSquare className="leading-icon" />
                   <select className="w-full" {...register('preferred_contact_method')}>
-                    <option value="">Select</option>
-                    {CONTACT_METHODS.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
-                      </option>
-                    ))}
+                    <option value="WHATSAPP">WhatsApp</option>
                   </select>
                 </div>
               </Field>
@@ -132,9 +127,9 @@ export default function EnquiryFormPage() {
                 <textarea className="min-h-28 w-full" {...register('description')} placeholder="Describe your enquiry in a few lines" />
               </Field>
             </div>
-
+ 
             {serverError ? <p className="rounded-xl bg-rose-50 p-3 text-sm text-rose-700">{serverError}</p> : null}
-
+ 
             <button type="submit" disabled={isSubmitting} className="btn-primary flex w-full items-center justify-center gap-2 py-3 text-base">
               <Send size={16} />
               {isSubmitting ? 'Submitting…' : 'Submit enquiry'}
@@ -145,7 +140,7 @@ export default function EnquiryFormPage() {
     </div>
   );
 }
-
+ 
 function Field({ label, error, children, className = '' }) {
   return (
     <label className={`block ${className}`}>
