@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Build
+dist/
+build/
+coverage/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Generated files
+backend/storage/
+backend/uploads/
+*.pdf
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Secrets / temp
+*.pem
+*.key
+tmp/
+temp/
+.cache/

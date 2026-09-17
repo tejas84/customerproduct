@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    @apply antialiased text-slate-800;
+  }
+
+  input:not([type='checkbox']):not([type='radio']):not([type='hidden']):not([type='file']):not([type='button']):not([type='submit']),
+  select,
+  textarea {
+    @apply rounded-xl border border-blue-100 bg-white px-3.5 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition;
+  }
+
+  input:not([type='checkbox']):not([type='radio']):not([type='hidden']):focus,
+  select:focus,
+  textarea:focus {
+    @apply border-blue-600 bg-white;
+    box-shadow: 0 0 0 4px rgb(37 99 235 / 0.15);
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply rounded-2xl border border-blue-100 bg-white;
+    box-shadow: 0 18px 50px -24px rgb(30 64 175 / 0.45);
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60;
+    box-shadow: 0 10px 30px -12px rgb(37 99 235 / 0.55);
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm font-medium text-blue-800 transition hover:bg-blue-50;
+  }
+
+  .data-table {
+    @apply min-w-full text-left text-sm;
+  }
+
+  .data-table thead {
+    @apply bg-blue-50 text-xs font-semibold uppercase tracking-wide text-blue-900;
+  }
+
+  .data-table th {
+    @apply px-3 py-3 font-semibold;
+  }
+
+  .data-table td {
+    @apply px-3 py-3 text-slate-700;
+  }
+
+  .data-table tbody tr {
+    @apply border-t border-blue-50 transition hover:bg-blue-50/60;
+  }
+
+  .has-leading-icon {
+    position: relative;
+  }
+
+  .has-leading-icon .leading-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    width: 1rem;
+    height: 1rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #60a5fa;
+  }
+
+  .has-leading-icon > input:not([type='checkbox']):not([type='radio']):not([type='hidden']):not([type='file']):not([type='button']):not([type='submit']),
+  .has-leading-icon > select {
+    padding-left: 2.85rem;
+  }
+}
