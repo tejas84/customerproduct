@@ -30,17 +30,41 @@ async function persistResult({ enquiry, customer, result, preview }) {
 
 async function sendEnquiryAcknowledgement({ enquiry, customer }) {
   const body = acknowledgementText(enquiry, customer);
+
   try {
-    const result = await whatsapp.sendMessage({ to: customer.mobile, body });
-    const record = await persistResult({ enquiry, customer, result, preview: body });
+    const result = await whatsapp.sendMessage({
+      to: customer.mobile,
+      body,
+      template: {
+        name: env.whatsapp.templateName,
+        language: env.whatsapp.templateLanguage,
+        parameters: [
+          customer.customer_name,
+          enquiry.enquiry_number,
+          enquiry.enquiry_type,
+        ],
+      },
+    });
+
+    const record = await persistResult({
+      enquiry,
+      customer,
+      result,
+      preview: body,
+    });
+
     return record;
   } catch (err) {
     const record = await persistResult({
       enquiry,
       customer,
-      result: { ok: false, failureReason: err.message },
+      result: {
+        ok: false,
+        failureReason: err.message,
+      },
       preview: body,
     });
+
     return record;
   }
 }
