@@ -7,11 +7,15 @@ async function start() {
   try {
     await sequelize.authenticate();
     console.log('Database connected');
-  } catch (err) {
-    console.error('Unable to connect to the database:', err.message);
-    process.exit(1);
-  }
+  } catch (error) {
+    console.error("DATABASE CONNECTION ERROR");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Errno:", error.errno);
+    console.error("SQL State:", error.sqlState);
 
+    process.exit(1);
+}
   app.listen(env.port, () => {
     console.log(`API listening on port ${env.port}`);
   });
